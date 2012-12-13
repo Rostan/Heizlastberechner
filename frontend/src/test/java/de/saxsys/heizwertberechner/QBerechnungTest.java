@@ -6,6 +6,8 @@ import org.junit.Test;
 
 public class QBerechnungTest {
 
+	private QBerechnung qBerechnung = new QBerechnung();
+
 	@Ignore
 	@Test
 	public void testBerechnen() {
@@ -44,76 +46,134 @@ public class QBerechnungTest {
 
 	@Test
 	public void testRaumSollWertUntergrenzeErlaubterWert() {
-		
+
 		double minimalErlaubteRaumSollWert = 5;
 
-		QBerechnung qBerechnung = new QBerechnung();
 		qBerechnung.setRaumSollWert(minimalErlaubteRaumSollWert);
-		assertEquals(qBerechnung.getRaumSollWert(),
-				minimalErlaubteRaumSollWert, 0.5);
+		assertEquals(minimalErlaubteRaumSollWert,
+				qBerechnung.getRaumSollWert(), 0.5);
 
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testRaumSollWertUntergrenzeVerbotenerWert() {
-		
-		double zuKleinerRaumSollWert = 4.9;
 
-		QBerechnung qBerechnung = new QBerechnung();
+		double zuKleinerRaumSollWert = 4.9;
 
 		qBerechnung.setRaumSollWert(zuKleinerRaumSollWert);
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testRaumSollWertObergrenzeVerbotenerWert() {
-		
+
 		double zuGrosserRaumSollWert = 35.1;
 
-		QBerechnung qBerechnung = new QBerechnung();
 		qBerechnung.setRaumSollWert(zuGrosserRaumSollWert);
 
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
-	public void testNLuftWechselZahlUntergrenzeVerbotenerWert(){
+	public void testNLuftWechselZahlUntergrenzeVerbotenerWert() {
 		double nLuftWechselZahlKleinerGleichNull = 0;
-		
-		QBerechnung qBerechnung = new QBerechnung();
+
 		qBerechnung.setRaumSollWert(nLuftWechselZahlKleinerGleichNull);
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
-	public void testNLuftWechselZahlObergrenzeVerbotenerWert(){
-		double nLuftWechselZahlGroeßerAlsVierzig = 41;
-		
-		QBerechnung qBerechnung = new QBerechnung();
-		qBerechnung.setRaumSollWert(nLuftWechselZahlGroeßerAlsVierzig);
+	public void testNLuftWechselZahlObergrenzeVerbotenerWert() {
+		double nLuftWechselZahlGroesserAlsVierzig = 41;
+
+		qBerechnung.setRaumSollWert(nLuftWechselZahlGroesserAlsVierzig);
 	}
-	
+
 	@Test
-	public void testNLuftWechselZahlUntergrenzeErlaubterWert(){
+	public void testNLuftWechselZahlUntergrenzeErlaubterWert() {
 		double testNLuftWechselZahlUntergrenzeErlaubterWert = 0.2;
-		
-		QBerechnung qBerechnung = new QBerechnung();
-		qBerechnung.setNluftWechselZahl(testNLuftWechselZahlUntergrenzeErlaubterWert);
-		assertEquals(qBerechnung.getNluftWechselZahl(),
-				testNLuftWechselZahlUntergrenzeErlaubterWert, 0.5);
+
+		qBerechnung
+				.setNluftWechselZahl(testNLuftWechselZahlUntergrenzeErlaubterWert);
+		assertEquals(testNLuftWechselZahlUntergrenzeErlaubterWert,
+				qBerechnung.getNluftWechselZahl(), 0.5);
 	}
-	
+
 	@Test
-	public void testAussenTemperaturUntergrenzeErlaubterWert(){
+	public void testAussenTemperaturUntergrenzeErlaubterWert() {
 		double aussenTemperaturUnterGrenzeErlaubterWert = -29.5;
-		
-		QBerechnung qBerechnung = new QBerechnung();
-		qBerechnung.setAussenTemperatur(aussenTemperaturUnterGrenzeErlaubterWert);
-		assertEquals(qBerechnung.getAussenTemperatur(), aussenTemperaturUnterGrenzeErlaubterWert, 0.5); 
+
+		qBerechnung
+				.setAussenTemperatur(aussenTemperaturUnterGrenzeErlaubterWert);
+		assertEquals(aussenTemperaturUnterGrenzeErlaubterWert,
+				qBerechnung.getAussenTemperatur(), 0.5);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testAussenTemperaturUntergrenzeVerbotenerWert() {
+		double aussenTemperaturUnterGrenzeVerbotenerWert = -30;
+
+		qBerechnung
+				.setAussenTemperatur(aussenTemperaturUnterGrenzeVerbotenerWert);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testAussenTemperaturObergrenzeVerbotenerWert() {
+		double aussenTemperaturObergrenzeVerbotenerWert = 41;
+
+		qBerechnung
+				.setAussenTemperatur(aussenTemperaturObergrenzeVerbotenerWert);
+	}
+
+	@Test
+	public void testFlaecheFensterUntergrenzeErlaubteWerte() {
+		double flaecheFensterUntergrenzeErlaubterWert = 0;
+
+		qBerechnung.setFlaecheFenster(flaecheFensterUntergrenzeErlaubterWert);
+		assertEquals(flaecheFensterUntergrenzeErlaubterWert,
+				qBerechnung.getFlaecheFenster(), 0.5);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testFlaecheFensterObergrenzeVerbotenerWert() {
+		double flaecheFensterObergrenzeVerbotenerWert = -0.1;
+
+		qBerechnung.setFlaecheFenster(flaecheFensterObergrenzeVerbotenerWert);
+	}
+
+	@Test
+	public void testFlaecheWandUntergrenzeErlaubteWerte() {
+		double flaecheWandUntergrenzeErlaubterWert = 0;
+
+		qBerechnung.setFlaecheWand(flaecheWandUntergrenzeErlaubterWert);
+		assertEquals(flaecheWandUntergrenzeErlaubterWert,
+				qBerechnung.getFlaecheWand(), 0.5);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testFlaecheWandObergrenzeVerbotenerWert() {
+		double flaecheWandObergrenzeVerbotenerWert = -0.1;
+
+		qBerechnung.setFlaecheWand(flaecheWandObergrenzeVerbotenerWert);
+	}
+
+	@Test
+	public void testKWertFensterUntergrenzeErlaubterWert() {
+		double kWertFensterUntergrenzeErlaubterWert = 0.8;
+
+		qBerechnung.setKWertFenster(kWertFensterUntergrenzeErlaubterWert);
+		assertEquals(kWertFensterUntergrenzeErlaubterWert,
+				qBerechnung.getKWertFenster(), 0.5);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testAussenTemperaturUntergrenzeVerbotenerWert(){
-		double aussenTemperaturUnterGrenzeVerbotenerWert = -30;
+	public void testKWertFensterUntergrenzeVerbotenerWert(){
+		double kWertFensterUntergrenzeVerbotenerWert = 0.6;
 		
-		QBerechnung qBerechnung = new QBerechnung();
-		qBerechnung.setAussenTemperatur(aussenTemperaturUnterGrenzeVerbotenerWert);
+		qBerechnung.setKWertFenster(kWertFensterUntergrenzeVerbotenerWert);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testKWertFensterObergrenzeVerbotenerWert(){
+		double kWertFensterObergrenzeVerbotenerWert = 6.1;
+		
+		qBerechnung.setKWertFenster(kWertFensterObergrenzeVerbotenerWert);
 	}
 }

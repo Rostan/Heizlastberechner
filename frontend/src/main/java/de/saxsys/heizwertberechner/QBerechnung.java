@@ -13,6 +13,9 @@ public class QBerechnung {
 	private double raumSollWert;
 	private double nLuftWechselZahl;
 	private double aussenTemperatur;
+	private double flaecheFenster;
+	private double flaecheWand;
+	private double kWertFenster;
 
 	public double getNluftWechselZahl() {
 
@@ -54,24 +57,39 @@ public class QBerechnung {
 	}
 
 	public double getFlaecheFenster() {
-		return 0;
+		return flaecheFenster;
 	}
 
 	public void setFlaecheFenster(double flaecheFenster) {
+		if (flaecheFenster < 0) {
+			throw new IllegalArgumentException(
+					"Fensterflaeche darf und kann nicht negativ sein!");
+		}
+		this.flaecheFenster = flaecheFenster;
 	}
 
 	public double getKWertFenster() {
-		return 0;
+		return kWertFenster;
 	}
 
 	public void setKWertFenster(double kWertFenster) {
+		if (kWertFenster < 0.7 || kWertFenster > 6) {
+			throw new IllegalArgumentException(
+					"Waermedurchgangskoeffizient entspricht nicht dem Wertebereich von 0,7 W/(m²K) bis 5,9 W/(m²K)");
+		}
+		this.kWertFenster = kWertFenster;
 	}
 
 	public double getFlaecheWand() {
-		return 0;
+		return flaecheWand;
 	}
 
 	public void setFlaecheWand(double flaecheWand) {
+		if (flaecheWand < 0) {
+			throw new IllegalArgumentException(
+					"Wandflaeche darf und kann nicht negativ sein!");
+		}
+		this.flaecheWand = flaecheWand;
 	}
 
 	public double getKWertWand() {
@@ -79,6 +97,7 @@ public class QBerechnung {
 	}
 
 	public void setKWertWand(double kWertWand) {
+
 	}
 
 	public double getQiWaermeverluste() {
