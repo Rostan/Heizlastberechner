@@ -1,7 +1,9 @@
 package de.saxsys.heizwertberechner;
 
+import javafx.beans.binding.NumberBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.binding.Bindings;
 
 /**
  * 
@@ -22,6 +24,30 @@ public class QBerechnung {
 	private DoubleProperty kWertWand = new SimpleDoubleProperty();
 	private DoubleProperty qIWaermeVerluste = new SimpleDoubleProperty();
 	private DoubleProperty qHeiz = new SimpleDoubleProperty();
+
+	private DoubleProperty ergebnis = new SimpleDoubleProperty();
+	protected NumberBinding deltaTemperatur;
+	protected NumberBinding nLuftwechselZahlProStundeInSekunden;
+	// TODO: bessere Namen für Terme, bzw Teile der Rechnung finden 
+	protected NumberBinding waermeVerlusteDurchFenster;
+	protected NumberBinding waermeVerlusteDurchWand;
+	protected NumberBinding verlusteMinusGewinne;
+
+	public QBerechnung() {
+		deltaTemperatur = Bindings.subtract(raumSollWert,
+				aussenTemperatur);
+		nLuftwechselZahlProStundeInSekunden = (Bindings.divide(nLuftWechselZahl, 3600));
+		waermeVerlusteDurchFenster = Bindings.add((nLuftwechselZahlProStundeInSekunden
+				.multiply(DICHTE_LUFT).multiply(SPEZ_WAERMEKAP_LUFT)
+				.multiply(deltaTemperatur)), (flaecheFenster
+				.multiply(kWertFenster).multiply(deltaTemperatur)));
+		
+		waermeVerlusteDurchWand = Bindings.add(waermeVerlusteDurchFenster,
+				(flaecheWand.multiply(kWertWand).multiply(deltaTemperatur)));
+		verlusteMinusGewinne = Bindings.subtract(waermeVerlusteDurchWand, qIWaermeVerluste);
+		
+		ergebnis.bind(verlusteMinusGewinne);
+	}
 
 	public double getNluftWechselZahl() {
 
@@ -128,17 +154,17 @@ public class QBerechnung {
 
 	public void setQHeiz(double qHeiz) {
 		if (qHeiz <= 0) {
-			throw new IllegalArgumentException(
-					"Unzulässige Wertangabe!");
+			throw new IllegalArgumentException("Unzulässige Wertangabe!");
 		}
 		this.qHeiz.set(qHeiz);
 	}
 
 	public double getResult() {
-		return 0;
+		return ergebnis.get();
 	}
 
-	public void berechnen() {
+	public DoubleProperty ergebnisProperty() {
+		return ergebnis;
 	}
 
 }

@@ -1,31 +1,40 @@
 package de.saxsys.heizwertberechner;
 
 import static org.junit.Assert.assertEquals;
+import javafx.beans.property.DoubleProperty;
+
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 public class QBerechnungTest {
 
-	private QBerechnung qBerechnung = new QBerechnung();
+	private QBerechnung qBerechnung;
+	
+	@Before
+	public void setup(){
+		qBerechnung = new QBerechnung();
+	}
 
-	@Ignore
 	@Test
 	public void testBerechnen() {
 
 		// alle werte setzen
-		double erwartetesErgebnis = 2381.5;
+		double erwartetesErgebnis = 2382.3086476666667;
 
 		double nLuftwechselZahl = 0.2;
 		double raumSollWert = 20;
 		double aussenTemperatur = -2.3;
 		double flaecheFenster = 10;
 		double kWertFenster = 1.3;
-		double flaecheWand = 50;
+		double flaecheWand = 80;
 		double kWertWand = 1.2;
 		double qIWaermeVerluste = 50;
 
-		QBerechnung qBerechnung = new QBerechnung();
-
+		
+		DoubleProperty ergebnisProperty = qBerechnung.ergebnisProperty();
+		
+		
 		qBerechnung.setNluftWechselZahl(nLuftwechselZahl);
 		qBerechnung.setRaumSollWert(raumSollWert);
 		qBerechnung.setAussenTemperatur(aussenTemperatur);
@@ -36,11 +45,11 @@ public class QBerechnungTest {
 		qBerechnung.setQiWaermeverluste(qIWaermeVerluste);
 		// berechnen
 
-		qBerechnung.berechnen();
-		double result = qBerechnung.getResult();
 		// ergebnis überprüfen
-
-		assertEquals(erwartetesErgebnis, result, 0.5);
+		assertEquals(22.3,qBerechnung.deltaTemperatur.getValue());
+		assertEquals(5.555555555555556E-5,qBerechnung.nLuftwechselZahlProStundeInSekunden.getValue());
+		assertEquals(291.5086476666667, qBerechnung.waermeVerlusteDurchFenster.getValue());
+	assertEquals(erwartetesErgebnis, ergebnisProperty.get(), 0.5);
 
 	}
 
