@@ -176,4 +176,41 @@ public class QBerechnungTest {
 		
 		qBerechnung.setKWertFenster(kWertFensterObergrenzeVerbotenerWert);
 	}
+	
+	@Test
+	public void testKWertWandUntergrenzeErlaubterWert() {
+		double kWertWandUntergrenzeErlaubterWert = 0.2;
+
+		qBerechnung.setKWertWand(kWertWandUntergrenzeErlaubterWert);
+		assertEquals(kWertWandUntergrenzeErlaubterWert,
+				qBerechnung.getKWertWand(), 0.5);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testKWertWandUntergrenzeVerbotenerWert(){
+		double kWertWandUntergrenzeVerbotenerWert = 0.19;
+		
+		qBerechnung.setKWertWand(kWertWandUntergrenzeVerbotenerWert);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testKWertWandObergrenzeVerbotenerWert(){
+		double kWertWandObergrenzeVerbotenerWert = 5.35;
+		
+		qBerechnung.setKWertWand(kWertWandObergrenzeVerbotenerWert);
+	}
+	
+	@Test
+	public void testQIWaermeverlusteUntergrenzeErlaubterWert(){
+		double qIWaermeverlusteUntergrenzeErlaubterWert = 0.01;
+		
+		qBerechnung.setQiWaermeverluste(qIWaermeverlusteUntergrenzeErlaubterWert);
+		assertEquals(qIWaermeverlusteUntergrenzeErlaubterWert, qBerechnung.getQiWaermeverluste(),0.5);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testQIWaermeverlusteUntergrenzeVerbotenerWert(){
+		double qIWaermeverlusteUntergrenzeVerbotenerWert = 0;
+		qBerechnung.setQiWaermeverluste(qIWaermeverlusteUntergrenzeVerbotenerWert);
+	}
 }
