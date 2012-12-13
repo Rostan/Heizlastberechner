@@ -213,4 +213,19 @@ public class QBerechnungTest {
 		double qIWaermeverlusteUntergrenzeVerbotenerWert = 0;
 		qBerechnung.setQiWaermeverluste(qIWaermeverlusteUntergrenzeVerbotenerWert);
 	}
+	
+	@Test
+	public void testQHeizUntergrenzeErlaubterWert(){
+		double qHeizUntergrenzeErlaubterWert = 0.1;
+		
+		qBerechnung.setQHeiz(qHeizUntergrenzeErlaubterWert);
+		assertEquals(qHeizUntergrenzeErlaubterWert, qBerechnung.getQHeiz(),0.5);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testQHeizUntergrenzeVerbotenerWert(){
+		double qHeizUntergrenzeVerbotenerWert = 0;
+		
+		qBerechnung.setQHeiz(qHeizUntergrenzeVerbotenerWert);
+	}
 }

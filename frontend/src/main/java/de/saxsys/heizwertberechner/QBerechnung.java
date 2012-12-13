@@ -1,5 +1,8 @@
 package de.saxsys.heizwertberechner;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+
 /**
  * 
  * @author roman.stange
@@ -10,18 +13,19 @@ public class QBerechnung {
 
 	private static final double SPEZ_WAERMEKAP_LUFT = 1005; // J/(kg*K)
 	private static final double DICHTE_LUFT = 1.292; // [ kg / m3 ]
-	private double raumSollWert;
-	private double nLuftWechselZahl;
-	private double aussenTemperatur;
-	private double flaecheFenster;
-	private double flaecheWand;
-	private double kWertFenster;
-	private double kWertWand;
-	private double qIWaermeVerluste;
+	private DoubleProperty raumSollWert = new SimpleDoubleProperty();
+	private DoubleProperty nLuftWechselZahl = new SimpleDoubleProperty();
+	private DoubleProperty aussenTemperatur = new SimpleDoubleProperty();
+	private DoubleProperty flaecheFenster = new SimpleDoubleProperty();
+	private DoubleProperty flaecheWand = new SimpleDoubleProperty();
+	private DoubleProperty kWertFenster = new SimpleDoubleProperty();
+	private DoubleProperty kWertWand = new SimpleDoubleProperty();
+	private DoubleProperty qIWaermeVerluste = new SimpleDoubleProperty();
+	private DoubleProperty qHeiz = new SimpleDoubleProperty();
 
 	public double getNluftWechselZahl() {
 
-		return nLuftWechselZahl;
+		return nLuftWechselZahl.get();
 	}
 
 	public void setNluftWechselZahl(double nLuftWechselZahl) {
@@ -29,12 +33,12 @@ public class QBerechnung {
 			throw new IllegalArgumentException(
 					"Luftwechselangaben sollten zwischen 0.2/h und 40/h liegen !");
 		}
-		this.nLuftWechselZahl = nLuftWechselZahl;
+		this.nLuftWechselZahl.set(nLuftWechselZahl);
 	}
 
 	public double getRaumSollWert() {
 
-		return raumSollWert;
+		return raumSollWert.get();
 	}
 
 	public void setRaumSollWert(double raumSollWert) {
@@ -42,12 +46,12 @@ public class QBerechnung {
 			throw new IllegalArgumentException(
 					"Raumsollwert sollte zwischen 5°C und 35°C liegen!");
 		}
-		this.raumSollWert = raumSollWert;
+		this.raumSollWert.set(raumSollWert);
 
 	}
 
 	public double getAussenTemperatur() {
-		return aussenTemperatur;
+		return aussenTemperatur.get();
 	}
 
 	public void setAussenTemperatur(double aussenTemperatur) {
@@ -55,11 +59,11 @@ public class QBerechnung {
 			throw new IllegalArgumentException(
 					"Außentemperatur entspricht lebensgefährlichen Bedingungen!");
 		}
-		this.aussenTemperatur = aussenTemperatur;
+		this.aussenTemperatur.set(aussenTemperatur);
 	}
 
 	public double getFlaecheFenster() {
-		return flaecheFenster;
+		return flaecheFenster.get();
 	}
 
 	public void setFlaecheFenster(double flaecheFenster) {
@@ -67,11 +71,11 @@ public class QBerechnung {
 			throw new IllegalArgumentException(
 					"Fensterflaeche darf und kann nicht negativ sein!");
 		}
-		this.flaecheFenster = flaecheFenster;
+		this.flaecheFenster.set(flaecheFenster);
 	}
 
 	public double getKWertFenster() {
-		return kWertFenster;
+		return kWertFenster.get();
 	}
 
 	public void setKWertFenster(double kWertFenster) {
@@ -79,11 +83,11 @@ public class QBerechnung {
 			throw new IllegalArgumentException(
 					"Waermedurchgangskoeffizient entspricht nicht dem Wertebereich von 0,7 W/(m²K) bis 5,9 W/(m²K)");
 		}
-		this.kWertFenster = kWertFenster;
+		this.kWertFenster.set(kWertFenster);
 	}
 
 	public double getFlaecheWand() {
-		return flaecheWand;
+		return flaecheWand.get();
 	}
 
 	public void setFlaecheWand(double flaecheWand) {
@@ -91,11 +95,11 @@ public class QBerechnung {
 			throw new IllegalArgumentException(
 					"Wandflaeche darf und kann nicht negativ sein!");
 		}
-		this.flaecheWand = flaecheWand;
+		this.flaecheWand.set(flaecheWand);
 	}
 
 	public double getKWertWand() {
-		return kWertWand;
+		return kWertWand.get();
 	}
 
 	public void setKWertWand(double kWertWand) {
@@ -103,26 +107,31 @@ public class QBerechnung {
 			throw new IllegalArgumentException(
 					"Waermedurchgangskoeffizient entspricht nicht dem Wertebereich von 0,7 W/(m²K) bis 5,9 W/(m²K)");
 		}
-		this.kWertWand = kWertWand;
+		this.kWertWand.set(kWertWand);
 	}
 
 	public double getQiWaermeverluste() {
-		return qIWaermeVerluste;
+		return qIWaermeVerluste.get();
 	}
 
 	public void setQiWaermeverluste(double qIWaermeVerluste) {
-		if (qIWaermeVerluste <= 0){
+		if (qIWaermeVerluste <= 0) {
 			throw new IllegalArgumentException(
 					"Unzulässige Wertangabe in Watt!");
 		}
-		this.qIWaermeVerluste = qIWaermeVerluste;
+		this.qIWaermeVerluste.set(qIWaermeVerluste);
 	}
 
-	public double getqHeiz() {
-		return 0;
+	public double getQHeiz() {
+		return qHeiz.get();
 	}
 
-	public void setqHeiz(double qHeiz) {
+	public void setQHeiz(double qHeiz) {
+		if (qHeiz <= 0) {
+			throw new IllegalArgumentException(
+					"Unzulässige Wertangabe!");
+		}
+		this.qHeiz.set(qHeiz);
 	}
 
 	public double getResult() {
