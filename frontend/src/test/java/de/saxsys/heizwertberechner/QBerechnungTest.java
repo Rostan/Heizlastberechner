@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import javafx.beans.property.DoubleProperty;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class QBerechnungTest {
@@ -85,14 +84,14 @@ public class QBerechnungTest {
 	public void testNLuftWechselZahlUntergrenzeVerbotenerWert() {
 		double nLuftWechselZahlKleinerGleichNull = 0;
 
-		qBerechnung.setRaumSollWert(nLuftWechselZahlKleinerGleichNull);
+		qBerechnung.setNluftWechselZahl(nLuftWechselZahlKleinerGleichNull);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testNLuftWechselZahlObergrenzeVerbotenerWert() {
 		double nLuftWechselZahlGroesserAlsVierzig = 41;
 
-		qBerechnung.setRaumSollWert(nLuftWechselZahlGroesserAlsVierzig);
+		qBerechnung.setNluftWechselZahl(nLuftWechselZahlGroesserAlsVierzig);
 	}
 
 	@Test
