@@ -28,8 +28,7 @@ public class QBerechnung {
 
 	private DoubleProperty ergebnis = new SimpleDoubleProperty();
 	protected NumberBinding deltaTemperatur;
-	protected NumberBinding nLuftwechselZahlProStundeInSekunden;
-	// TODO: bessere Namen für Terme, bzw Teile der Rechnung finden 
+	protected NumberBinding nLuftwechselZahlProStundeInSekunden; 
 	protected NumberBinding waermeVerlusteDurchFenster;
 	protected NumberBinding waermeVerlusteDurchWand;
 	protected NumberBinding verlusteMinusGewinne;
