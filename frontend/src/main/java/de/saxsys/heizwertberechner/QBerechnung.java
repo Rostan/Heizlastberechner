@@ -15,6 +15,7 @@ public class QBerechnung {
 
 	private static final double SPEZ_WAERMEKAP_LUFT = 1005; // J/(kg*K)
 	private static final double DICHTE_LUFT = 1.292; // [ kg / m3 ]
+	private static final double SEKUNDEN_PRO_STUNDE = 3600;
 	private DoubleProperty raumSollWert = new SimpleDoubleProperty();
 	private DoubleProperty nLuftWechselZahl = new SimpleDoubleProperty();
 	private DoubleProperty aussenTemperatur = new SimpleDoubleProperty();
@@ -36,7 +37,7 @@ public class QBerechnung {
 	public QBerechnung() {
 		deltaTemperatur = Bindings.subtract(raumSollWert,
 				aussenTemperatur);
-		nLuftwechselZahlProStundeInSekunden = (Bindings.divide(nLuftWechselZahl, 3600));
+		nLuftwechselZahlProStundeInSekunden = (Bindings.divide(nLuftWechselZahl, SEKUNDEN_PRO_STUNDE));
 		waermeVerlusteDurchFenster = Bindings.add((nLuftwechselZahlProStundeInSekunden
 				.multiply(DICHTE_LUFT).multiply(SPEZ_WAERMEKAP_LUFT)
 				.multiply(deltaTemperatur)), (flaecheFenster
@@ -57,7 +58,7 @@ public class QBerechnung {
 	public void setNluftWechselZahl(double nLuftWechselZahl) {
 		if (nLuftWechselZahl < 0.2 || nLuftWechselZahl > 40) {
 			throw new IllegalArgumentException(
-					"Luftwechselangaben sollten zwischen 0.2/h und 40/h liegen !");
+					"Wert für Luftwechselzahl liegt nicht im Wertebereich - sollte zwischen 0.2/h und 40/h liegen !");
 		}
 		this.nLuftWechselZahl.set(nLuftWechselZahl);
 	}
@@ -70,7 +71,7 @@ public class QBerechnung {
 	public void setRaumSollWert(double raumSollWert) {
 		if (raumSollWert < 5 || raumSollWert > 35) {
 			throw new IllegalArgumentException(
-					"Raumsollwert sollte zwischen 5°C und 35°C liegen!");
+					"Raumsollwert erscheint unrealistisch - sollte zwischen 5°C und 35°C liegen!");
 		}
 		this.raumSollWert.set(raumSollWert);
 
@@ -83,7 +84,7 @@ public class QBerechnung {
 	public void setAussenTemperatur(double aussenTemperatur) {
 		if (aussenTemperatur <= -30 || aussenTemperatur > 40) {
 			throw new IllegalArgumentException(
-					"Außentemperatur entspricht lebensgefährlichen Bedingungen!");
+					"Wert der Außentemperatur entspricht lebensgefährlichen Bedingungen!");
 		}
 		this.aussenTemperatur.set(aussenTemperatur);
 	}
@@ -95,7 +96,7 @@ public class QBerechnung {
 	public void setFlaecheFenster(double flaecheFenster) {
 		if (flaecheFenster < 0) {
 			throw new IllegalArgumentException(
-					"Fensterflaeche darf und kann nicht negativ sein!");
+					"Angaben der Fensterflaeche dürfen und können nicht negativ sein!");
 		}
 		this.flaecheFenster.set(flaecheFenster);
 	}
@@ -119,7 +120,7 @@ public class QBerechnung {
 	public void setFlaecheWand(double flaecheWand) {
 		if (flaecheWand < 0) {
 			throw new IllegalArgumentException(
-					"Wandflaeche darf und kann nicht negativ sein!");
+					"Angaben der Wandflaeche dürfen und könnennicht negativ sein!");
 		}
 		this.flaecheWand.set(flaecheWand);
 	}
@@ -131,7 +132,7 @@ public class QBerechnung {
 	public void setKWertWand(double kWertWand) {
 		if (kWertWand < 0.2 || kWertWand > 5.3) {
 			throw new IllegalArgumentException(
-					"Waermedurchgangskoeffizient entspricht nicht dem Wertebereich von 0,7 W/(m²K) bis 5,9 W/(m²K)");
+					"Waermedurchgangskoeffizient entspricht nicht dem Wertebereich von 0,2 W/(m²K) bis 5,3 W/(m²K)");
 		}
 		this.kWertWand.set(kWertWand);
 	}
