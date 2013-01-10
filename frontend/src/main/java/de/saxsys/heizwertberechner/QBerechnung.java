@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.binding.Bindings;
 
 /**
+ * QBerechnung stellt die Parameter und Methoden zur Heizmengenberechnung zur Verfügung.
  * 
  * @author roman.stange
  * 
@@ -32,7 +33,11 @@ public class QBerechnung {
 	protected NumberBinding waermeVerlusteDurchFenster;
 	protected NumberBinding waermeVerlusteDurchWand;
 	protected NumberBinding verlusteMinusGewinne;
-
+	
+	/**
+	 * Konstruktor der Heizmenge Qi in Watt pro Stunde ausrechnet
+	 */
+	
 	public QBerechnung() {
 		deltaTemperatur = Bindings.subtract(raumSollWert,
 				aussenTemperatur);
@@ -48,7 +53,12 @@ public class QBerechnung {
 		
 		ergebnis.bind(verlusteMinusGewinne);
 	}
-
+	
+	
+	/**
+	 * 
+	 * @return die Luftwechselzahl n pro Stunde
+	 */
 	public double getNluftWechselZahl() {
 
 		return nLuftWechselZahl.get();
@@ -61,7 +71,11 @@ public class QBerechnung {
 		}
 		this.nLuftWechselZahl.set(nLuftWechselZahl);
 	}
-
+	
+	/**
+	 * 
+	 * @return Raumsollwert in °Celsius
+	 */
 	public double getRaumSollWert() {
 
 		return raumSollWert.get();
@@ -75,7 +89,10 @@ public class QBerechnung {
 		this.raumSollWert.set(raumSollWert);
 
 	}
-
+	/**
+	 * 
+	 * @return Außentemperatur in ° Celsius
+	 */
 	public double getAussenTemperatur() {
 		return aussenTemperatur.get();
 	}
@@ -87,7 +104,10 @@ public class QBerechnung {
 		}
 		this.aussenTemperatur.set(aussenTemperatur);
 	}
-
+	/**
+	 * 
+	 * @return Fensterfläche in m²
+	 */
 	public double getFlaecheFenster() {
 		return flaecheFenster.get();
 	}
@@ -99,7 +119,11 @@ public class QBerechnung {
 		}
 		this.flaecheFenster.set(flaecheFenster);
 	}
-
+	
+	/**
+	 * 
+	 * @return k-Wert Fenster(Wärmedurchgangskoeffizent)
+	 */
 	public double getKWertFenster() {
 		return kWertFenster.get();
 	}
@@ -111,7 +135,10 @@ public class QBerechnung {
 		}
 		this.kWertFenster.set(kWertFenster);
 	}
-
+	/**
+	 * 
+	 * @return Fensterfläche in m²
+	 */
 	public double getFlaecheWand() {
 		return flaecheWand.get();
 	}
@@ -123,11 +150,18 @@ public class QBerechnung {
 		}
 		this.flaecheWand.set(flaecheWand);
 	}
-
+	/**
+	 * 
+	 * @return  k-Wert Wand (Wärmedurchgangskoeffizent)
+	 */
 	public double getKWertWand() {
 		return kWertWand.get();
 	}
-
+	
+	/**
+	 * 
+	 * @param kWertWand
+	 */
 	public void setKWertWand(double kWertWand) {
 		if (kWertWand < 0.2 || kWertWand > 5.3) {
 			throw new IllegalArgumentException(
@@ -135,11 +169,18 @@ public class QBerechnung {
 		}
 		this.kWertWand.set(kWertWand);
 	}
-
+	/**
+	 * 
+	 * @return Wärmeverluste in Watt
+	 */
 	public double getQiWaermeverluste() {
 		return qIWaermeVerluste.get();
 	}
-
+	
+	/**
+	 * 
+	 * @param qIWaermeVerluste
+	 */
 	public void setQiWaermeverluste(double qIWaermeVerluste) {
 		if (qIWaermeVerluste <= 0) {
 			throw new IllegalArgumentException(
@@ -147,7 +188,11 @@ public class QBerechnung {
 		}
 		this.qIWaermeVerluste.set(qIWaermeVerluste);
 	}
-
+	
+	/**
+	 * 
+	 * @return Heizwert in Watt
+	 */
 	public double getQHeiz() {
 		return qHeiz.get();
 	}

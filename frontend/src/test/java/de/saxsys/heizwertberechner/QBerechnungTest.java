@@ -6,6 +6,8 @@ import javafx.beans.property.DoubleProperty;
 import org.junit.Before;
 import org.junit.Test;
 
+
+
 public class QBerechnungTest {
 
 	private QBerechnung qBerechnung;
@@ -20,7 +22,6 @@ public class QBerechnungTest {
 
 		// alle werte setzen
 		double erwartetesErgebnis = 2382.3086476666667;
-
 		double nLuftwechselZahl = 0.2;
 		double raumSollWert = 20;
 		double aussenTemperatur = -2.3;
@@ -48,7 +49,7 @@ public class QBerechnungTest {
 		assertEquals(22.3,qBerechnung.deltaTemperatur.getValue());
 		assertEquals(5.555555555555556E-5,qBerechnung.nLuftwechselZahlProStundeInSekunden.getValue());
 		assertEquals(291.5086476666667, qBerechnung.waermeVerlusteDurchFenster.getValue());
-	assertEquals(erwartetesErgebnis, ergebnisProperty.get(), 0.5);
+		assertEquals(erwartetesErgebnis, ergebnisProperty.get(), 0.5);
 
 	}
 
